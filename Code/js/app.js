@@ -6,8 +6,16 @@ let scene;
 let mesh;
 var ySpeed = 0.1;
 var time = 0;
+var moveDown = false;
+var moveUp = false;
+var moveLeft = false;
+var moveRight = false;
+var moveFront = false;
+var moveBack = false;
 var downCalled = false;
 var startRestore = false;
+var degree_90 = Math.PI/2;
+var target = -2;
 
 
 function init() {
@@ -18,17 +26,16 @@ function init() {
  scene = new THREE.Scene();
 
  // Set the background color
- scene.background = new THREE.Color('blue');
+ scene.background = new THREE.Color('white');
 
  createCamera();
  createControls();
  createLights();
  createPlanes();
- //createPlane();
  createClaw();
  createRenderer();
- document.onkeydown = function(event){downCalled = true;}//keyDown();};
- //document.addEventListener("keydown", onDocumentKeyDown, false);
+ document.onkeydown = function(event){keyDownEvent(event)};
+ document.onkeyup = function(event){keyUpEvent(event);}
 
  // start the animation loop
  renderer.setAnimationLoop(() => {
@@ -43,7 +50,7 @@ function init() {
 function createCamera() {
 
  camera = new THREE.PerspectiveCamera(50,4/3,.5,1000);
- camera.position.set(0,0,10);
+ camera.position.set(0,3,10);
  camera.lookAt(0, 0, 0);
  scene.add(camera);
 
@@ -82,16 +89,19 @@ function createPlane() {
 }
 
 function createPlanes() {
-   const upperPlane_Geometry = new THREE.BoxGeometry(20, 0.5, 1);
+   const upperPlane_Geometry = new THREE.TorusGeometry(5, 0.6, 2, 50);
    const upperPlane_Material = new THREE.MeshStandardMaterial({ color: 0xffffff});
 
-   const lowerPlane_Geometry = new THREE.BoxGeometry(20, 0.5, 1);
+   const lowerPlane_Geometry = new THREE.TorusGeometry(3, 0.6, 2, 50);
    const lowerPlane_Material = new THREE.MeshStandardMaterial({ color: 0xffffff});
 
    upperPlane_Mesh = new THREE.Mesh(upperPlane_Geometry, upperPlane_Material);
-   upperPlane_Mesh.position.set(0,-2,0);
+   upperPlane_Mesh.position.set(0,-0.5,0);
+   upperPlane_Mesh.rotation.set(degree_90,0,0);
    lowerPlane_Mesh = new THREE.Mesh(lowerPlane_Geometry, lowerPlane_Material);
-   lowerPlane_Mesh.position.set(0,-4,0);
+   
+   lowerPlane_Mesh.rotation.set(degree_90,0,0);
+   lowerPlane_Mesh.position.set(0,-2.5,0);
    scene.add(upperPlane_Mesh);
    scene.add(lowerPlane_Mesh);
 }
@@ -107,9 +117,17 @@ function createClaw() {
    const clawRightBase_Material = new THREE.MeshStandardMaterial({ color: 0x000000});
    const clawRight = new THREE.BoxGeometry(0.5,0.1,0.2);
    const clawRight_Material = new THREE.MeshStandardMaterial({ color: 0x00ffff});
+   const clawTarget = new THREE.CircleGeometry( 0.1, 32 );
+   const clawTarget_Material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
+   
+
+
   
    claw_Mesh = new THREE.Mesh(clawBase, clawBase_Material);
    claw_Mesh.position.set(0,2,0);
+   clawTarget_Mesh = new THREE.Mesh( clawTarget, clawTarget_Material);
+   clawTarget_Mesh.position.set(claw_Mesh.position.x,target,claw_Mesh.position.z);
+   clawTarget_Mesh.rotation.set(-degree_90,0,0);
    clawLeftBase_Mesh = new THREE.Mesh(clawLeftBase, clawLeftBase_Material);
    clawLeftBase_Mesh.rotation.set(0,0,1);
    clawLeftBase_Mesh.position.set(-0.4,-0.1,0);
@@ -124,6 +142,7 @@ function createClaw() {
    clawRight_Mesh.position.set(0.3,-0.2,0);
    
    scene.add(claw_Mesh);
+   scene.add(clawTarget_Mesh);
    claw_Mesh.add(clawLeftBase_Mesh);
    claw_Mesh.add(clawRightBase_Mesh);
    clawLeftBase_Mesh.add(clawLeft_Mesh);
@@ -133,8 +152,8 @@ function createClaw() {
 function createRenderer() {
 
  renderer = new THREE.WebGLRenderer({ antialias: true });
- renderer.setSize(container.clientWidth, container.clientHeight);
-
+ //renderer.setSize(container.clientWidth, container.clientHeight);
+ renderer.setSize(800, 600);
  renderer.setPixelRatio(window.devicePixelRatio);
 
  renderer.physicallyCorrectLights = true;
@@ -147,36 +166,61 @@ container.appendChild(renderer.domElement);
 // perform any updates to the scene, called once per frame
 // avoid heavy computation here
 function update() {
-   if (downCalled == true){
-      openClaw();
+   if (moveUp == true){
+      clawUp();
    }
-   if (startRestore==true){
-      restore();
+   else if (moveDown == true){
+      clawDown();
    }
-
-}
-function dummy(){
+   else if (moveRight == true){
+      clawRight();
+   }
+   else if (moveLeft == true){
+      clawLeft();
+   }
+   else if (moveFront == true){
+      clawFront();
+   }
+   else if (moveBack == true){
+      clawBack();
+   }
+   var pos = (claw_Mesh.position.x)**2+(claw_Mesh.position.z)**2;
+   if((claw_Mesh.position.x)**2+(claw_Mesh.position.z)**2<=2){
+      target = -4;
+      clawTarget_Mesh.position.set(claw_Mesh.position.x,target,claw_Mesh.position.z);
+   }
+   else{
+      target = -2.5;
+      clawTarget_Mesh.position.set(claw_Mesh.position.x,target,claw_Mesh.position.z);
+   }
 
 }
 // render, or 'draw a still image', of the scene
 function render() {
-
  renderer.render(scene, camera);
-
 }
 
-function onWindowResize() {
-
- console.log('You resized the browser window!');
- // set the aspect ratio to match the new browser window aspect ratio
- camera.aspect = container.clientWidth / container.clientHeight;
-
- // update the camera's frustum
- camera.updateProjectionMatrix();
-
- renderer.setSize(container.clientWidth, container.clientHeight);
+function clawDown(){
+   if(claw_Mesh.position.y>=-7){
+      claw_Mesh.translateY(-0.1);
+      if(clawRightBase_Mesh.position.x <= 0.55){
+         clawRightBase_Mesh.translateX(0.003);
+         clawRightBase_Mesh.translateY(0.003);
+         clawRightBase_Mesh.rotateZ(0.01); 
+         clawRight_Mesh.rotateZ(0.005); 
+         clawLeftBase_Mesh.translateX(-0.003);
+         clawLeftBase_Mesh.translateY(0.003);
+         clawLeftBase_Mesh.rotateZ(-0.01); 
+         clawLeft_Mesh.rotateZ(-0.005);
+      } 
+   }
+   else{
+      moveDown = false;
+      moveUp = true;
+   }
 }
-function restore(){
+
+function clawUp(){
    if(clawRightBase_Mesh.position.x >= 0.4){
       clawRightBase_Mesh.translateX(-0.012);
       clawRightBase_Mesh.translateY(-0.012);
@@ -191,38 +235,104 @@ function restore(){
       claw_Mesh.translateY(0.05);
    }
    else{
-      startRestore = false;
-   } 
+      moveUp = false;
+   }
+
 }
 
-function keyDown(event) {
-      openClaw();
-}
-
-function sleep(delay) {
-   var start = new Date().getTime();
-   while (new Date().getTime() < start + delay);
-}
-
-function openClaw(){
-   if(claw_Mesh.position.y>=-3){
-      claw_Mesh.translateY(-0.1);
-      if(clawRightBase_Mesh.position.x <= 0.55){
-         clawRightBase_Mesh.translateX(0.003);
-         clawRightBase_Mesh.translateY(0.003);
-         clawRightBase_Mesh.rotateZ(0.01); 
-         clawRight_Mesh.rotateZ(0.005); 
-         clawLeftBase_Mesh.translateX(-0.003);
-         clawLeftBase_Mesh.translateY(0.003);
-         clawLeftBase_Mesh.rotateZ(-0.01); 
-         clawLeft_Mesh.rotateZ(-0.005);
-      } 
+function clawRight(){
+   if(claw_Mesh.position.x<=5){
+      claw_Mesh.translateX(0.05);
    }
    else{
-      downCalled = false;
-      startRestore = true;
+      moveRight = false;
+   }
+
+}
+
+function clawLeft(){
+   if(claw_Mesh.position.x>=-5){
+      claw_Mesh.translateX(-0.05);
+   }
+   else{
+      moveLeft= false;
+   }
+
+}
+
+function clawFront(){
+   console.log(claw_Mesh.position.z);
+   if(claw_Mesh.position.z<=5){
+      claw_Mesh.translateZ(0.05);
+   }
+   else{
+      moveFront = false;
    }
 }
+
+function clawBack(){
+   if(claw_Mesh.position.z>=-5){
+      claw_Mesh.translateZ(-0.05);
+   }
+   else{
+      moveBack = false;
+   }
+}
+
+
+
+function keyDownEvent(event){
+   if(event.key == " " ){
+      moveDown = true;
+      moveUp = false;
+   }
+   if(event.key == "ArrowRight" ){
+      moveRight = true;
+   }
+   if(event.key == "ArrowLeft" ){
+      moveLeft = true;
+   }
+   if(event.key == "ArrowDown" ){
+      moveFront = true;
+   }
+   if(event.key == "ArrowUp" ){
+      moveBack = true;
+   }
+
+}
+function keyUpEvent(event){
+   if(event.key == " "){
+      moveDown = false;
+      moveUp = true;
+   }
+   if(event.key == "ArrowRight" ){
+      moveRight = false;
+   }
+   if(event.key == "ArrowLeft" ){
+      moveLeft = false;
+   }
+   if(event.key == "ArrowDown" ){
+      moveFront = false;
+   }
+   if(event.key == "ArrowUp" ){
+      moveBack = false;
+   }
+
+}
+
+
+function onWindowResize() {
+
+   console.log('You resized the browser window!');
+   // set the aspect ratio to match the new browser window aspect ratio
+   camera.aspect = container.clientWidth / container.clientHeight;
+  
+   // update the camera's frustum
+   camera.updateProjectionMatrix();
+  
+   renderer.setSize(container.clientWidth, container.clientHeight);
+  }
+
 window.addEventListener('resize', onWindowResize);
 
 init();
