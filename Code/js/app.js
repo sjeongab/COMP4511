@@ -1,9 +1,7 @@
 let container;
 let camera;
-let controls;
 let renderer;
 let scene;
-let mesh;
 var ySpeed = 0.1;
 var time = 0;
 var moveDown = false;
@@ -25,11 +23,11 @@ function init() {
  // create a Scene
  scene = new THREE.Scene();
 
+
  // Set the background color
  scene.background = new THREE.Color('white');
 
  createCamera();
- createControls();
  createLights();
  createPlanes();
  createClaw();
@@ -56,44 +54,19 @@ function createCamera() {
 
 }
 
-function createControls() {
-
- controls = new THREE.OrbitControls( camera, container );
-
-}
-
 function createLights() {
 
- const ambientLight = new THREE.HemisphereLight(
- 0xddeeff, 
- 0x200020, 
- 5, 
-    );
-
+ const ambientLight = new THREE.HemisphereLight(0xddeeff, 0x552055, 5);
  scene.add(ambientLight);
-
-}
-
-function createPlane() {
-
- const coneGeometry = new THREE.ConeGeometry( 5, 5, 20, 1, true);
- const coneMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff, side: THREE.DoubleSide });
-
-
- planeMesh = new THREE.Mesh(coneGeometry, coneMaterial);
-
- scene.add(planeMesh);
- planeMesh.rotation.x = 180;
- planeMesh.rotation.z = -100;
 
 }
 
 function createPlanes() {
    const upperPlane_Geometry = new THREE.TorusGeometry(5, 0.6, 2, 50);
-   const upperPlane_Material = new THREE.MeshStandardMaterial({ color: 0xffffff});
+   const upperPlane_Material = new THREE.MeshStandardMaterial({ color: 0xf4c2c2, opacity: 0.5, transparent: true});
 
    const lowerPlane_Geometry = new THREE.TorusGeometry(3, 0.6, 2, 50);
-   const lowerPlane_Material = new THREE.MeshStandardMaterial({ color: 0xffffff});
+   const lowerPlane_Material = new THREE.MeshStandardMaterial({ color: 0xf4c2c2, opacity: 0.5, transparent: true});
 
    upperPlane_Mesh = new THREE.Mesh(upperPlane_Geometry, upperPlane_Material);
    upperPlane_Mesh.position.set(0,-0.5,0);
@@ -186,12 +159,10 @@ function update() {
    }
    var pos = (claw_Mesh.position.x)**2+(claw_Mesh.position.z)**2;
    if((claw_Mesh.position.x)**2+(claw_Mesh.position.z)**2<=2){
-      target = -4;
-      clawTarget_Mesh.position.set(claw_Mesh.position.x,target,claw_Mesh.position.z);
+      clawTarget_Mesh.position.set(claw_Mesh.position.x,-4,claw_Mesh.position.z);
    }
    else{
-      target = -2.5;
-      clawTarget_Mesh.position.set(claw_Mesh.position.x,target,claw_Mesh.position.z);
+      clawTarget_Mesh.position.set(claw_Mesh.position.x,-2.5,claw_Mesh.position.z);
    }
 
 }
@@ -241,7 +212,7 @@ function clawUp(){
 }
 
 function clawRight(){
-   if(claw_Mesh.position.x<=5){
+   if(claw_Mesh.position.x<5.6){
       claw_Mesh.translateX(0.05);
    }
    else{
@@ -251,7 +222,7 @@ function clawRight(){
 }
 
 function clawLeft(){
-   if(claw_Mesh.position.x>=-5){
+   if(claw_Mesh.position.x>-5.6){
       claw_Mesh.translateX(-0.05);
    }
    else{
@@ -261,8 +232,7 @@ function clawLeft(){
 }
 
 function clawFront(){
-   console.log(claw_Mesh.position.z);
-   if(claw_Mesh.position.z<=5){
+   if(claw_Mesh.position.z<5.6){
       claw_Mesh.translateZ(0.05);
    }
    else{
@@ -271,7 +241,7 @@ function clawFront(){
 }
 
 function clawBack(){
-   if(claw_Mesh.position.z>=-5){
+   if(claw_Mesh.position.z>-5.6){
       claw_Mesh.translateZ(-0.05);
    }
    else{
@@ -321,7 +291,7 @@ function keyUpEvent(event){
 }
 
 
-function onWindowResize() {
+/*function onWindowResize() {
 
    console.log('You resized the browser window!');
    // set the aspect ratio to match the new browser window aspect ratio
@@ -333,6 +303,6 @@ function onWindowResize() {
    renderer.setSize(container.clientWidth, container.clientHeight);
   }
 
-window.addEventListener('resize', onWindowResize);
+window.addEventListener('resize', onWindowResize);*/
 
 init();
