@@ -14,6 +14,7 @@ var downCalled = false;
 var startRestore = false;
 var degree_90 = Math.PI/2;
 var target = -2;
+var time;
 
 
 function init() {
@@ -22,7 +23,8 @@ function init() {
  container = document.querySelector('#scene-container');
  // create a Scene
  scene = new THREE.Scene();
-
+ var clock = new THREE.Clock();
+ clock.start();
 
  // Set the background color
  scene.background = new THREE.Color('white');
@@ -37,11 +39,12 @@ function init() {
 
  // start the animation loop
  renderer.setAnimationLoop(() => {
- update();
- render();
- 
-
-    });
+    if(clock.getElapsedTime() <= 60){
+       console.log(clock.getElapsedTime());
+      update();
+      render();
+    }
+});
 }
 
 
