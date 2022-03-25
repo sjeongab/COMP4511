@@ -14,7 +14,7 @@ var downCalled = false;
 var startRestore = false;
 var degree_90 = Math.PI/2;
 var target = -2;
-var time;
+var point;
 
 
 function init() {
@@ -34,13 +34,13 @@ function init() {
  createPlanes();
  createClaw();
  createRenderer();
+ createWarmHole();
  document.onkeydown = function(event){keyDownEvent(event)};
  document.onkeyup = function(event){keyUpEvent(event);}
 
  // start the animation loop
  renderer.setAnimationLoop(() => {
     if(clock.getElapsedTime() <= 60){
-       console.log(clock.getElapsedTime());
       update();
       render();
     }
@@ -95,9 +95,6 @@ function createClaw() {
    const clawRight_Material = new THREE.MeshStandardMaterial({ color: 0x00ffff});
    const clawTarget = new THREE.CircleGeometry( 0.1, 32 );
    const clawTarget_Material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
-   
-
-
   
    claw_Mesh = new THREE.Mesh(clawBase, clawBase_Material);
    claw_Mesh.position.set(0,2,0);
@@ -125,6 +122,27 @@ function createClaw() {
    clawRightBase_Mesh.add(clawRight_Mesh);
   }
 
+function createWarmHole(){
+   const upperWarmHole = new THREE.CircleGeometry( 0.5, 32 );
+   const upperWarmHole_Material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+   const lowerWarmHole = new THREE.CircleGeometry( 0.5, 32 );
+   const lowerWarmHole_Material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+   const endWarmHole = new THREE.CircleGeometry( 2, 32 );
+   const endWarmHole_Material = new THREE.MeshBasicMaterial( { color: 0x000000 } );
+
+   upperWarmHole_Mesh = new THREE.Mesh(upperWarmHole, upperWarmHole_Material);
+   lowerWarmHole_Mesh = new THREE.Mesh(lowerWarmHole, lowerWarmHole_Material);
+   endWarmHole_Mesh = new THREE.Mesh(endWarmHole, endWarmHole_Material);
+
+   upperWarmHole_Mesh.position.set(1,0,-5.6);
+   lowerWarmHole_Mesh.position.set(-1,-2.7,-5.6);
+   endWarmHole_Mesh.rotation.set(degree_90-1,0,0);
+   endWarmHole_Mesh.position.set(0,-3,0);
+
+   scene.add(upperWarmHole_Mesh);   
+   scene.add(lowerWarmHole_Mesh);   
+   scene.add(endWarmHole_Mesh);   
+} 
 function createRenderer() {
 
  renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -160,12 +178,19 @@ function update() {
    else if (moveBack == true){
       clawBack();
    }
-   var pos = (claw_Mesh.position.x)**2+(claw_Mesh.position.z)**2;
-   if((claw_Mesh.position.x)**2+(claw_Mesh.position.z)**2<=2){
-      clawTarget_Mesh.position.set(claw_Mesh.position.x,-4,claw_Mesh.position.z);
-   }
-   else{
+   var dist = ((claw_Mesh.position.x)**2+(claw_Mesh.position.z)**2)**(0.5);
+   if(dist>=4.4 && dist<=5.6){ 
+      // upper plane
+      clawTarget_Mesh.material.color.setHex( 0xff0000 );
+      clawTarget_Mesh.position.set(claw_Mesh.position.x,-0.5,claw_Mesh.position.z);
+   } else if (dist>=2.4 && dist<=3.6) {
+      // lower plane
+      clawTarget_Mesh.material.color.setHex( 0x0000ff );
       clawTarget_Mesh.position.set(claw_Mesh.position.x,-2.5,claw_Mesh.position.z);
+   } else {
+      // no plane
+      //clawTarget_Mesh.material.color.setHex( 0xffffff );
+      clawTarget_Mesh.position.set(claw_Mesh.position.x,1000,claw_Mesh.position.z);
    }
 
 }
