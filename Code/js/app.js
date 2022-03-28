@@ -2,18 +2,6 @@ let container;
 let camera;
 let renderer;
 let scene;
-var ySpeed = 0.1;
-var time = 0;
-var moveDown = false;
-var moveUp = false;
-var moveLeft = false;
-var moveRight = false;
-var moveFront = false;
-var moveBack = false;
-var downCalled = false;
-var startRestore = false;
-var degree_90 = Math.PI/2;
-var target = -2;
 var point;
 var itemList = [];
 
@@ -115,7 +103,7 @@ function addWarmHoles(){
    scene.add(lowerWarmHole.mesh);
 
    endWarmHole = new WarmHole(2);
-   endWarmHole.mesh.rotation.set(degree_90-1,0,0);
+   endWarmHole.mesh.rotation.set(Math.PI/2-1,0,0);
    endWarmHole.mesh.position.set(0,-3,0);
    scene.add(endWarmHole.mesh);
 } 
