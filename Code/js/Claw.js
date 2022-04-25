@@ -1,5 +1,3 @@
-//import THREE from "vendor/three/three.js"
-
 class Claw {
     constructor(props) {
         this.createClaw();
@@ -10,6 +8,7 @@ class Claw {
         this.left = false;
         this.front = false;
         this.back = false;
+        this.plane = "none";
     }
     createClaw(){
         const base_Geometry = new THREE.BoxGeometry(0.9,0.15,0.2);
@@ -46,12 +45,13 @@ class Claw {
     }
 
     createTarget(){
-        const target_Geometry = new THREE.CircleGeometry(0.1, 32 );
+        const target_Geometry = new THREE.CircleGeometry(0.08, 32 );
         const target_Material = new THREE.MeshBasicMaterial( { color: 0xffff00 } );
 
         this.target = new THREE.Mesh(target_Geometry, target_Material);
-        this.target.position.set(this.base.position.x,-2,this.base.position.z);
+        
         this.target.rotation.set(-Math.PI/2,0,0);
+        this.target.position.set(this.base.position.x,-2,this.base.position.z);
     }
 
     move(){
@@ -75,21 +75,26 @@ class Claw {
          }
     }
 
-    moveTarget(){
-        var dist = ((this.base.position.x)**2+(this.base.position.z)**2)**(0.5);
-   if(dist>=4.4 && dist<=5.6){ 
-      // upper plane
-      this.target.material.color.setHex( 0xff0000 );
-      this.target.position.set(this.base.position.x,-0.5, this.base.position.z);
-      this.target.visible = true;
-   } else if (dist>=2.4 && dist<=3.6) {
-      // lower plane
-      this.target.material.color.setHex( 0x0000ff );
-      this.target.position.set(this.base.position.x,-2.5, this.base.position.z);
-      this.target.visible = true;
-   } else {
-      // no plane
-      this.target.visible = false;
+    moveTarget(upperX,upperZ,lowerX,lowerZ){
+      var distUpper = ((this.base.position.x-upperX)**2+(this.base.position.z-upperZ)**2)**(0.5);
+      var distLower = ((this.base.position.x-lowerX)**2+(this.base.position.z-lowerZ)**2)**(0.5);
+      if(distUpper>=4.4 && distUpper<=5.6){ 
+         // upper plane
+         this.plane = "upper";
+         //console.log(this.plane);
+         this.target.material.color.setHex( 0xff0000 );
+         this.target.position.set(this.base.position.x, -0.5, this.base.position.z);
+         this.target.visible = true;
+      } else if (distLower>=2.4 && distLower<=3.6) {
+         // lower plane
+         this.plane = "lower";
+         this.target.material.color.setHex( 0x0000ff );
+         this.target.position.set(this.base.position.x,-2.5, this.base.position.z);
+         this.target.visible = true;
+      } else {
+         // no plane
+         this.plane = "none";
+         this.target.visible = false;
    }
     }
 
@@ -105,7 +110,7 @@ class Claw {
             this.leftTip.rotateZ(0.02);
          }
          if(this.base.position.y < 2.0){
-            this.base.translateY(0.05);
+            this.base.translateY(0.15);
          }
          else{
             this.up = false;
@@ -113,8 +118,9 @@ class Claw {
     }
 
     moveDown(){
-        if(this.base.position.y>=-7){
-            this.base.translateY(-0.1);
+        if(this.base.position.y>=-3){
+         //console.log(claw.mesh.position.y);
+            this.base.translateY(-0.15);
             if(this.rightBase.position.x <= 0.55){
                 this.rightBase.translateX(0.003);
                 this.rightBase.translateY(0.003);
@@ -135,7 +141,7 @@ class Claw {
 
     moveRight(){
         if(this.base.position.x < 5.6){
-            this.base.translateX(0.05);
+            this.base.translateX(0.1);
          }
          else{
             this.right = false;
@@ -144,7 +150,7 @@ class Claw {
 
     moveLeft(){
         if(this.base.position.x > -5.6){
-            this.base.translateX(-0.05);
+            this.base.translateX(-0.1);
          }
          else{
             this.left = false;
@@ -153,7 +159,7 @@ class Claw {
 
     moveFront(){
         if(this.base.position.z < 5.6){
-            this.base.translateZ(0.05);
+            this.base.translateZ(0.1);
          }
          else{
             this.front = false;
@@ -162,10 +168,11 @@ class Claw {
     
     moveBack(){
         if(this.base.position.z > -5.6){
-            this.base.translateZ(-0.05);
+            this.base.translateZ(-0.1);
          }
          else{
             this.back = false;
          }
     }
+
 }
