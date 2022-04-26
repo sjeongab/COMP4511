@@ -8,8 +8,9 @@ var clock;
 var timeText;
 var pointText;
 var x = 0;
-var timeLimit = 100;
+var timeLimit = 5;
 let sound;
+var gameStart = false;
 
 let isCatching = false;
 var collisionList = [];
@@ -26,29 +27,39 @@ var lowerZ = 0;
 const lowerR = 0.5;
 var lowerA = 0;
 
+function start(){
+   buttons = document.getElementById('start');
+   gameStart = true;
+   buttons.style.visibility = 'hidden';
+   buttons.disabled = 'true';
+   init();
+}
 function init() {
+   
    createCanvas();
+   let coin;
+   coin = new Sound('../Code/sounds/point.wav', camera, 10);
    addObjects();
-   addItems(25);
+   addItems(20);
    keySetUp();
    displayPoint();
    displayTime();
-   buttons = document.getElementById('button1');
-   buttons.onclick = function StartAnimation(){
-      playsound();
-   }
+   
+   
    
    // start the animation loop
    renderer.setAnimationLoop(() => {
       if (timeLimit - clock.getElapsedTime() >= 0) {
          update();
          render();
+         
       }
       else{
-         sound.play();
+         coin.play();
          clock.stop();
          point = 0;
-         clock.start();
+         //alerttest();
+         //clock.start();
       }
    });
    
@@ -78,7 +89,7 @@ function createCanvas(){
 //randomly create items
 function addItems(num_items){
    for (var i = 0; i < num_items; i++) {
-      var r = Math.random() / 10 + 0.1;  //random radius
+      var r = Math.random() / 10 + 0.15;  //random radius
       var p = Math.random();  // probability
       var va = 0.01;
       a = i / 10 * 2 * Math.PI;
@@ -164,7 +175,6 @@ function keySetUp() {
    document.onkeyup = function (event) { keyUpEvent(event); }
 }
 
-
 function createPlanes() {
    upperPlane = new Plane(5, upperY);
    lowerPlane = new Plane(3, lowerY);
@@ -201,11 +211,12 @@ function updatePlanes(){
    upperPlane.mesh.position.set(upperX, upperY, upperZ);
    lowerPlane.mesh.position.set(lowerX, lowerY, lowerZ);
 }
+
 function updateItems(){
    var currDistance;
    for (var i = 0; i < itemList.length; i++) {
       currDistance = ((claw.mesh.position.x - itemList[i].x) ** 2 + (claw.base.position.y - itemList[i].y) ** 2 + (claw.mesh.position.z - itemList[i].z) ** 2) ** (1 / 2);
-      if (currDistance <= itemList[i].r * 1.3) {
+      if (currDistance <= itemList[i].r * 1.5) {
 
          itemList[i].isCaught(claw.base);
 
@@ -237,7 +248,7 @@ function keyDownEvent(event) {
          }
       }
       else if (claw.plane == "lower") {
-         console.log(claw.mesh.position.y);
+         
          if (claw.mesh.position.y < -2)
             claw.up = true;
          claw.down = false;
@@ -299,4 +310,4 @@ function addPoint(event) {
    }
 }
 
-init();
+//init();

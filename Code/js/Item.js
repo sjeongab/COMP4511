@@ -25,19 +25,19 @@ class Item {
  
     setTexture(texture, r){
       var image = new Image();
-      if(r <= 0.12){
+      if(r <= 0.17){
         image.src = plus;
         this.type = "plus";
       }
-      else if(r<=0.135){
+      else if(r<=0.185){
         image.src = feed_high;
         this.type = "high";
       }
-     else if(r<0.16){
+     else if(r<0.21){
         image.src = feed_mid;
         this.type = "mid";
      }
-     else if( r< 0.195){
+     else if( r< 0.245){
         image.src = feed_low;
         this.type = "low";
      }

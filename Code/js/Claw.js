@@ -81,7 +81,6 @@ class Claw {
       if(distUpper>=4.4 && distUpper<=5.6){ 
          // upper plane
          this.plane = "upper";
-         //console.log(this.plane);
          this.target.material.color.setHex( 0xff0000 );
          this.target.position.set(this.base.position.x, -0.5, this.base.position.z);
          this.target.visible = true;
@@ -118,8 +117,12 @@ class Claw {
     }
 
     moveDown(){
-        if(this.base.position.y>=-3){
-         //console.log(claw.mesh.position.y);
+        var limit;
+        if(this.plane == "upper")
+            limit = -0.48
+         else
+            limit = -2.48
+        if(this.base.position.y>=limit){
             this.base.translateY(-0.15);
             if(this.rightBase.position.x <= 0.55){
                 this.rightBase.translateX(0.003);
