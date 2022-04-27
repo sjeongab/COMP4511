@@ -14,6 +14,8 @@
  <link href="styles/main.css" rel="stylesheet" type="text/css">
 
  <script src="js/vendor/three/three.js"></script>
+ <script src="js/vendor/three/MtlLoader.js"></script>
+ <script src="js/vendor/three/ObjLoader.js"></script>
 
 <script src="js/Sound.js"></script>
 <script src="textures/Plus.js"></script>
@@ -28,7 +30,7 @@
 
 </head>
 
-<body>
+<body onload="onLoad()">
  
  <button id="start" onclick = "start()">START</button>
  <div id="scene-container">

@@ -8,7 +8,7 @@ var clock;
 var timeText;
 var pointText;
 var x = 0;
-var timeLimit = 5;
+var timeLimit = 10;
 let sound;
 var gameStart = false;
 
@@ -26,26 +26,49 @@ const lowerY = -2.5;
 var lowerZ = 0;
 const lowerR = 0.5;
 var lowerA = 0;
+var ham_0;
+var ham_1;
+var ham_2;
 
+function onLoad(){
+   ham_0 = loadObj('r0-3/r0-1.mtl', 'r0-3/r0-1.obj');
+   ham_1 = loadObj('r0-3/r0-2.mtl', 'r0-3/r0-2.obj');
+   ham_2 = loadObj('r0-3/r0-3.mtl', 'r0-3/r0-3.obj');
+}
+function loadObj(mtl_path, obj_path){
+   return new Promise(function(resolve){
+      new MTLLoader().load(mtl_path, function(materials) {
+         materials.preload();
+         mat = materials;
+         new OBJLoader().setMaterials(materials).load(obj_path, resolve );
+      });
+   });
+   
+}
 function start(){
    buttons = document.getElementById('start');
    gameStart = true;
    buttons.style.visibility = 'hidden';
    buttons.disabled = 'true';
+   
    init();
 }
 function init() {
-   
+    
    createCanvas();
    let coin;
    coin = new Sound('../Code/sounds/point.wav', camera, 10);
+  
    addObjects();
    addItems(20);
    keySetUp();
    displayPoint();
    displayTime();
    
-   
+   ham_0.then(myObj=>{
+      myObj.position.set(0,1,-1);
+      scene.add(myObj);
+   });
    
    // start the animation loop
    renderer.setAnimationLoop(() => {
@@ -55,7 +78,7 @@ function init() {
          
       }
       else{
-         coin.play();
+         //coin.play();
          clock.stop();
          point = 0;
          //alerttest();
@@ -68,18 +91,18 @@ function init() {
 function createCanvas(){
    container = document.querySelector('#scene-container');
    scene = new THREE.Scene();
-   scene.background = new THREE.Color('white');
+   scene.background = new THREE.Color('orange');
 
-   camera = new THREE.PerspectiveCamera(50, 4 / 3, .5, 1000);
+   camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, .5, 1000);
    camera.position.set(0, 3, 10);
    camera.lookAt(0, 0, 0);
    scene.add(camera);
 
-   const ambientLight = new THREE.HemisphereLight(0xddeeff, 0x552055, 5);
+   const ambientLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 5);
    scene.add(ambientLight);
 
    renderer = new THREE.WebGLRenderer({ antialias: true });
-   renderer.setSize(800, 600);
+   renderer.setSize(window.innerWidth, window.innerHeight);
    renderer.setPixelRatio(window.devicePixelRatio);
    renderer.physicallyCorrectLights = true;
    container.appendChild(renderer.domElement);
@@ -105,21 +128,6 @@ function addItems(num_items){
    for (var i = 0; i < itemList.length; i++) {
       itemList[i].createItem();
    }
-}
-
-function playsound(){
-   const listener = new THREE.AudioListener();
-   camera.add( listener );
-  
-   sound = new THREE.Audio( listener );
-   const file = '../Code/sounds/point.wav';
-   // load a sound and set it as the Audio object's buffer
-   const audioLoader = new THREE.AudioLoader();
-   audioLoader.load(file, function( buffer ) {
-      sound.setBuffer( buffer );
-      sound.setLoop( false );
-      sound.setVolume( 10 );
-   });
 }
 
 function alerttest(){
@@ -309,5 +317,3 @@ function addPoint(event) {
       }
    }
 }
-
-//init();

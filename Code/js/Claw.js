@@ -1,3 +1,5 @@
+var hi = "hi";
+
 class Claw {
     constructor(props) {
         this.createClaw();
