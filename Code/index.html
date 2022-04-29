@@ -23,6 +23,13 @@
 <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
  <script src="js/Leaderboard.js"></script>
 
+ <script src="Configuration.js"></script>
+ <script src="sounds/Sound.js"></script>
+ <script src="js/key.js"></script>
+ <script src="js/Time.js"></script>
+ <script src="js/Point.js"></script>
+ <script src="Hamster/Hamster.js"></script>
+ <script src="js/Scene.js"></script>
 <script src="js/Sound.js"></script>
 <script src="textures/Plus.js"></script>
 <script src="textures/Feed_low.js"></script>
@@ -38,9 +45,9 @@
 
 <body onload="onLoad()">
     
-    <button id="EASY" onclick = "easy()">EASY</button>
-    <button id="HARD" onclick = "hard()">HARD</button>
-    <button id="CRAZY" onclick = "crazy()">CRAZY</button>
+    <button id="EASY" onclick = "init('EASY')">EASY</button>
+    <button id="HARD" onclick = "init('HARD')">HARD</button>
+    <button id="CRAZY" onclick = "init('CRAZY')">CRAZY</button>
  <div id="scene-container">
     
 </div>

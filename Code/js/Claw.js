@@ -1,4 +1,4 @@
-var hi = "hi";
+var claw;
 
 class Claw {
     constructor(props) {
@@ -116,7 +116,7 @@ class Claw {
             this.base.translateY(0.15);
          }
          else{
-            clawSound.sound.stop();
+            //clawSound.sound.stop();
             this.up = false;
          }
     }
@@ -128,6 +128,7 @@ class Claw {
          else
             limit = -2.48
         if(this.base.position.y>=limit){
+            clawSound.play();
             this.base.translateY(-0.15);
             if(this.rightBase.position.x <= 0.55){
                 this.rightBase.translateX(0.003);
@@ -138,13 +139,13 @@ class Claw {
                 this.leftBase.translateY(0.003);
                 this.leftBase.rotateZ(-0.01); 
                 this.leftTip.rotateZ(-0.005);
-                clawSound.play();
+                
             } 
          }
          else{
             this.down = false;
             this.up = true;
-            clawSound.sound.stop();
+            //clawSound.sound.stop();
          }
 
     }
@@ -185,4 +186,15 @@ class Claw {
          }
     }
 
+}
+
+function addClaw() {
+   claw = new Claw();
+   scene.add(claw.mesh);
+   scene.add(claw.target);
+}
+
+function updateClaw(){
+   claw.moveTarget(upperX, upperZ, lowerX, lowerZ);
+   claw.move();
 }

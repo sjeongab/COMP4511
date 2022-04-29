@@ -1,27 +1,31 @@
-const TYPE = {
-   low: 'low',
-   mid: 'mid',
-   high: 'high',
-   gold: 'gold',
-   plus: 'plus'
-}
+var itemList = [];
+
 class Item {
-    constructor(r,R,y,a,vy,va, plane){
-       this.r = r;     // radius of the item
-       this.R = R;     // radius of the circular path of item
-       this.a = a;     // angle
-       this.x = R*Math.cos(a);     // position X
-       this.y = y;                 // position Y
-       this.z = R*Math.sin(a);     // position Z
-       this.vy = vy;   // downward velocity
-       this.va = va;   // angular velocity
-       this.caught = false;
-       this.x = 0;
-       this.plane = plane;
-       this.texture = new THREE.Texture();
-       this.setTexture(this.texture, r);         
-       this.itemMesh = new THREE.Mesh(new THREE.SphereGeometry(this.r,64,32),new THREE.MeshBasicMaterial({map: this.texture}));
-    }
+   constructor(r,a,plane) {
+      this.r = r;     // radius of the item
+      this.a = a;     // angle
+      if (plane == 'upper_plane') {
+         this.R = 5;
+         this.x = upperX + this.R * Math.cos(a);
+         this.y = upperY+r;
+         this.z = upperZ + this.R * Math.sin(a);
+         this.va = vaUpper;
+      } else if (plane == 'lower_plane') {
+         this.R = 3;
+         this.x = lowerX + this.R * Math.cos(a);
+         this.y = lowerY+r;
+         this.z = lowerZ + this.R * Math.sin(a);
+         this.va = vaLower;
+      }
+      this.caught = false;
+      this.plane = plane;
+      this.texture = new THREE.Texture();
+      this.setTexture(this.texture, r);
+      this.geometry = new THREE.SphereGeometry(this.r, 64, 32);
+      this.material = new THREE.MeshBasicMaterial({ map: this.texture });
+      this.itemMesh = new THREE.Mesh(this.geometry,this.material);
+   }
+
  
     setTexture(texture, r){
       var image = new Image();
@@ -51,6 +55,7 @@ class Item {
       };
       texture.repeat.set(2,2);
     }
+
     updateItem(planeX,planeZ){
        
        var orix = this.x;   // original x
@@ -81,4 +86,57 @@ class Item {
     isReleased(){
         this.caught = false;
     }
+    disposeItem(){
+      this.texture.dispose();
+      this.geometry.dispose();
+      this.material.dispose();
+   }
  }
+
+ function addItems(num_items){
+   for (var i = 0;i<numItemUpper;i++){
+      angleListUpper.push(2*Math.PI/numItemUpper*i);
+   }
+   for (var i = 0;i<numItemLower;i++){
+      angleListLower.push(2*Math.PI/numItemLower*i);
+   }
+   for (var i=0;i<numItemUpper;i++){
+      var r = Math.random()/10 + 0.15;
+      itemList.push(new Item(r,angleListUpper[i],"upper_plane"));
+   }
+   for (var i=0;i<numItemLower;i++){
+      var r = Math.random()/10 + 0.15;
+      itemList.push(new Item(r,angleListLower[i],"lower_plane"));
+   }
+   for (var i = 0; i<itemList.length;i++){
+      itemList[i].createItem();
+   }
+}
+
+function updateItems(){
+   var currDistance;
+   for (var i = 0; i < itemList.length; i++) {
+      currDistance = ((claw.mesh.position.x - itemList[i].x) ** 2 + (claw.base.position.y - itemList[i].y) ** 2 + (claw.mesh.position.z - itemList[i].z) ** 2) ** (1 / 2);
+      if (currDistance <= itemList[i].r * catchRange) {
+         itemList[i].isCaught(claw.base);
+         claw.down = false;
+         claw.up = true;
+         break;
+      }
+   }
+   for (var i = 0; i < itemList.length; i++) {
+      if (itemList[i].caught == false) {
+         if (itemList[i].plane == "upper_plane") {
+            itemList[i].updateItem(upperX, upperZ);
+         } else {
+            itemList[i].updateItem(lowerX, lowerZ);
+         }
+      }
+   }
+   for (var i = 0;i<angleListUpper.length;i++){
+      angleListUpper[i] += vaUpper;
+   }
+   for (var i = 0;i<angleListLower.length;i++){
+      angleListLower[i] += vaLower;
+   }
+}
