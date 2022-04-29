@@ -62,6 +62,7 @@ class Claw {
          }
          else if (this.down == true){
             this.moveDown();
+            
          }
          else if (this.right == true){
             this.moveRight();
@@ -100,6 +101,7 @@ class Claw {
     }
 
     moveUp(){
+      
         if(this.rightBase.position.x >= 0.4){
             this.rightBase.translateX(-0.012);
             this.rightBase.translateY(-0.012);
@@ -114,6 +116,7 @@ class Claw {
             this.base.translateY(0.15);
          }
          else{
+            clawSound.sound.stop();
             this.up = false;
          }
     }
@@ -135,11 +138,13 @@ class Claw {
                 this.leftBase.translateY(0.003);
                 this.leftBase.rotateZ(-0.01); 
                 this.leftTip.rotateZ(-0.005);
+                clawSound.play();
             } 
          }
          else{
             this.down = false;
             this.up = true;
+            clawSound.sound.stop();
          }
 
     }
