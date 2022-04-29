@@ -160,5 +160,5 @@ function displayGold() {
 }
 
 function updateGold() {
-   document.getElementById("time").innerHTML = "Gold: " + goldCount;
+   document.getElementById("gold").innerHTML = "Gold: " + goldCount;
 }
