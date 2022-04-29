@@ -1,4 +1,6 @@
 var itemList = [];
+var goldCount = 0;
+var goldText;
 
 class Item {
    constructor(r,a,plane) {
@@ -139,4 +141,24 @@ function updateItems(){
    for (var i = 0;i<angleListLower.length;i++){
       angleListLower[i] += vaLower;
    }
+}
+
+function displayGold() {
+   goldText = document.createElement('div');
+   goldText.id = "gold";
+   goldText.style.position = 'absolute';
+   goldText.style.width = 100;
+   goldText.style.height = 100;
+   goldText.style.top = 90 + 'px';
+   goldText.style.textAlign = "center";
+   goldText.style.color = 'black';
+   goldText.style.fontWeight = 'bold';
+   goldText.style.fontSize = '20px';
+   goldText.style.fontFamily = 'Fantasy';
+   goldText.innerHTML = "Gold: 0";
+   document.body.appendChild(goldText);
+}
+
+function updateGold() {
+   document.getElementById("time").innerHTML = "Gold: " + goldCount;
 }

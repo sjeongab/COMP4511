@@ -1,11 +1,20 @@
-
-
 var timeLimit = time;
-var gold = 0;
 
 function onLoad(){
+   document.getElementById('Loading').style.display = 'block';
+   document.getElementById('EASY').style.display = 'none';
+   document.getElementById('HARD').style.display = 'none';
+   document.getElementById('CRAZY').style.display = 'none';
    loadSound();
    loadHamsters();
+   setTimeout(function(){
+   document.getElementById('Loading').style.display = 'none';
+   document.getElementById('EASY').style.display = 'inline-block';
+   document.getElementById('HARD').style.display = 'inline-block';
+   document.getElementById('CRAZY').style.display = 'inline-block';
+   },100);
+   
+   
 }
 
 function init(mode) {
@@ -19,6 +28,7 @@ function init(mode) {
    
    displayPoint();
    displayTime();
+   displayGold();
    renderer.setAnimationLoop(animate);
 }
 

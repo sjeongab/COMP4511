@@ -6,14 +6,14 @@ function keySetUp() {
 function keyDownEvent(event) {
     if (event.key == " ") {
        if (claw.plane == "upper") {
-          if (claw.mesh.position.y < 0) {
+          if (claw.mesh.position.y < upperY+0.5) {
              claw.up = true;
              claw.down = false;
           }
        }
        else if (claw.plane == "lower") {
           
-          if (claw.mesh.position.y < -2)
+          if (claw.mesh.position.y < lowerY+0.5)
              claw.up = true;
           claw.down = false;
        }

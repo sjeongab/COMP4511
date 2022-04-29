@@ -10,7 +10,7 @@ function displayTime() {
     timeText.style.height = 100;
     timeText.innerHTML = "Time: " + (timeLimit - Math.trunc(clock.getElapsedTime()));
     timeText.style.top = 70 + 'px';
-    timeText.style.left = 680 + 'px';
+    timeText.style.textAlign = "center";
     timeText.style.color = 'black';
     timeText.style.fontWeight = 'bold';
     timeText.style.fontSize = '20px';

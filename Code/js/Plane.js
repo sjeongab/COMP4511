@@ -7,7 +7,7 @@ var angleListUpper = [];
 var angleListLower = [];
 
 var upperX = 0;
-var upperY = -0.5;
+var upperY = -1;
 var upperZ = 0;
 var lowerX = 0;
 var lowerY = -2.5;

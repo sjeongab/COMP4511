@@ -1,10 +1,12 @@
 /* main.css */
 body {
   background-color: orange;
-  margin: 100px;
+  margin: 5%;
   overflow: hidden;
-  color: blue;
+  font-size: 100px;
+  color: black;
   text-align: center;
+  font-weight : bold;
  }
  
  h1 {
@@ -30,10 +32,22 @@ body {
   text-align: center;
   display: inline-block;
   font-size: 30px;
-  margin: 30px 100px 30px 100px;
+  margin: 5% 20%;
   font-weight : bold;
 }
 button:hover {
   opacity: 1; 
   color: red;
+}
+
+#myProgress {
+  align-self: center;
+  width: 100%;
+  background-color: beige;
+}
+
+#myBar {
+  width: 1%;
+  height: 30px;
+  background-color: coral;
 }

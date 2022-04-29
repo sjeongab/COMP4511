@@ -8,7 +8,7 @@ function displayPoint() {
     pointText.style.height = 100;
     pointText.innerHTML = "Point: " + point;
     pointText.style.top = 50 + 'px';
-    pointText.style.left = 680 + 'px';
+    pointText.style.align = "center";
     pointText.style.color = 'black';
     pointText.style.fontWeight = 'bold';
     pointText.style.fontSize = '20px';
@@ -19,15 +19,16 @@ function addPoint(event) {
     for (var i = 0; i < itemList.length; i++) {
        if (itemList[i].caught && claw.base.position.y >= 1.5) {
           if(itemList[i].type == "plus"){
-             timeLimit += 10;
+             timeLimit += addTime;
              timeUpSound.play();
           }
           else if(itemList[i].type=="gold"){
-             gold += 1;
+             updateGold();
+             goldCount += 1;
              timeUpSound.play();
-             if(gold >= 7){
+             if(goldCount >= 7){
              point+=300;
-             gold = 0;
+             goldCount = 0;
              }
           }
           else if (itemList[i].plane == "lower_plane"){
@@ -50,9 +51,9 @@ function addPoint(event) {
              hamUpdate_2 = true;
              tadaSound.play();
           }
-          document.getElementById("point").innerHTML = "Point " + point;
+          document.getElementById("point").innerHTML = "Point: " + point;
           claw.base.remove(itemList[i].itemMesh);
-          //itemList[i].disposeItem();
+          itemList[i].disposeItem();
           var r = Math.random()/10 + 0.15;
           if (i<numItemUpper){
              itemList[i] = new Item(r,angleListUpper[i],"upper_plane");

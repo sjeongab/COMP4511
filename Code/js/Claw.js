@@ -85,13 +85,13 @@ class Claw {
          // upper plane
          this.plane = "upper";
          this.target.material.color.setHex( 0xff0000 );
-         this.target.position.set(this.base.position.x, -0.5, this.base.position.z);
+         this.target.position.set(this.base.position.x, upperY, this.base.position.z);
          this.target.visible = true;
       } else if (distLower>=2.4 && distLower<=3.6) {
          // lower plane
          this.plane = "lower";
          this.target.material.color.setHex( 0x0000ff );
-         this.target.position.set(this.base.position.x,-2.5, this.base.position.z);
+         this.target.position.set(this.base.position.x, lowerY, this.base.position.z);
          this.target.visible = true;
       } else {
          // no plane
@@ -116,7 +116,6 @@ class Claw {
             this.base.translateY(0.15);
          }
          else{
-            //clawSound.sound.stop();
             this.up = false;
          }
     }
@@ -124,9 +123,9 @@ class Claw {
     moveDown(){
         var limit;
         if(this.plane == "upper")
-            limit = -0.48
+            limit = upperY+0.02;
          else
-            limit = -2.48
+            limit = lowerY+0.02;
         if(this.base.position.y>=limit){
             clawSound.play();
             this.base.translateY(-0.15);
@@ -138,14 +137,12 @@ class Claw {
                 this.leftBase.translateX(-0.003);
                 this.leftBase.translateY(0.003);
                 this.leftBase.rotateZ(-0.01); 
-                this.leftTip.rotateZ(-0.005);
-                
+                this.leftTip.rotateZ(-0.005);  
             } 
          }
          else{
             this.down = false;
             this.up = true;
-            //clawSound.sound.stop();
          }
 
     }
