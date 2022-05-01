@@ -36,6 +36,9 @@ function keyDownEvent(event) {
     if (event.key == "ArrowUp") {
        claw.back = true;
     }
+    if (event.key == "r" || event.key == "R"){
+       restartGame();
+    }
  }
  
  function keyUpEvent(event) {

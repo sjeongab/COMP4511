@@ -3,9 +3,6 @@ var MODE;
 var upperPlane;
 var lowerPlane;
 
-var angleListUpper = [];
-var angleListLower = [];
-
 var upperX = 0;
 var upperY = -1;
 var upperZ = 0;

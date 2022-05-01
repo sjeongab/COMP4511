@@ -24,13 +24,12 @@ function addPoint(event) {
           }
           else if(itemList[i].type=="gold"){
              goldCount += 1;
-             console.log(goldCount);
              timeUpSound.play();
-             updateGold();
-             if(goldCount >= 7){
+             if(goldCount >= goldMax){
              point+=300;
              goldCount = 0;
              }
+             updateGold();
           }
           else if (itemList[i].plane == "lower_plane"){
              point += Math.round((Math.round(2 / itemList[i].r) + Math.round(itemList[i].va * 10)) * 1.25);
@@ -52,7 +51,7 @@ function addPoint(event) {
              hamUpdate_2 = true;
              tadaSound.play();
           }
-          document.getElementById("point").innerHTML = "Point: " + point;
+          //document.getElementById("point").innerHTML = "Point: " + point;
           claw.base.remove(itemList[i].itemMesh);
           itemList[i].disposeItem();
           var r = Math.random()/10 + 0.15;
@@ -64,4 +63,9 @@ function addPoint(event) {
           itemList[i].createItem();
        }
     }
+    updatePoint();
  }
+
+function updatePoint(){
+   document.getElementById("point").innerHTML = "Point: " + point;
+}
