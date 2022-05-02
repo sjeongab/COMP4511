@@ -15,7 +15,7 @@ button {
   button:hover {opacity: 1}
 
   body{
-    margin: 100px;
+    margin: 10%;
     overflow: hidden;
     background-color: orange;
     text-align: center;

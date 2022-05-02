@@ -1,8 +1,9 @@
 var timeLimit = time;
-var gameRunning = false;
+var gamePlaying;
 
 function onLoad() {
    document.getElementById('Loading').style.display = 'block';
+   document.getElementById('restart').style.display = 'none';
    document.getElementById('EASY').style.display = 'none';
    document.getElementById('HARD').style.display = 'none';
    document.getElementById('CRAZY').style.display = 'none';
@@ -19,7 +20,10 @@ function onLoad() {
 }
 
 function init(mode) {
+   gamePlaying = true;
    MODE = mode;
+   point = 0;
+   goldCount = 0;
    hideButtons();
    keySetUp();
    createCanvas();
@@ -31,7 +35,6 @@ function init(mode) {
    displayTime();
    displayGold();
    renderer.setAnimationLoop(animate);
-   gameRunning = true;
 }
 
 function animate() {
@@ -40,18 +43,23 @@ function animate() {
       render();
    }
    else {
+      if(gamePlaying){
       bgmSound.sound.stop();
-      if (gameRunning) {
-         endSound.play();
-         //clock.stop();
-         writeScore("John Doe", point);
-         point = 0;
-         gameRunning = false;
+      endSound.play();
+      document.getElementById('scene-container').style.display = 'none';
+      document.getElementById('nameRecord').style.display = 'inline-block';
+      //document.getElementById('restart').style.display = 'inline-block';
+      gamePlaying = false;
+      for (var i = 0; i < itemList.length; i++) {
+         if (itemList[i].caught){
+            claw.base.remove(itemList[i].itemMesh);
+         }
+         itemList[i].disposeItem();
       }
+      }
+      //writeScore("John Doe", point);
+      //restartGame();
    }
-   //renderer.setAnimationLoop(null);
-   //alerttest();
-   //clock.start();
 }
 
 
@@ -60,16 +68,6 @@ function hideButtons() {
    document.getElementById('HARD').style.display = 'none';
    document.getElementById('CRAZY').style.display = 'none';
 }
-
-
-/*function alerttest(){
-   let text;
-   let person = prompt("Please enter your name:", "Harry Potter");
-   if (person != null && person != "") {
-      text = person + "'s score: "+point;
-   }
-   alert(text);
-}*/
 
 function addObjects() {
    createPlanes();
@@ -87,13 +85,17 @@ function update() {
    addPoint();
 }
 
+function nameRecord(){
+   document.getElementById('nameRecord').style.display = 'none';
+   document.getElementById('restart').style.display = 'inline-block';
+}
+
 function restartGame() {
-   for (var i = 0; i < itemList.length; i++) {
-      if (itemList[i].caught){
-         claw.base.remove(itemList[i].itemMesh);
-      }
-      itemList[i].disposeItem();
-   }
+   gamePlaying = true;
+   document.getElementById('scene-container').style.display = 'flex';
+   document.getElementById('restart').style.display = 'none';
+   bgmSound.play();
+   
    addItems();
    updatePlanes();
    point = 0;

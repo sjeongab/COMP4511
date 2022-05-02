@@ -18,7 +18,8 @@ body {
  
  #scene-container {
   position: fixed;
-  width: 100%;
+  left: 0;
+  width: 50%;
   height: 100%;
  }
  
@@ -35,19 +36,46 @@ body {
   margin: 5% 20%;
   font-weight : bold;
 }
+input {
+  border-color: coral;
+  border-width: 5px;
+  background-color: beige;
+  width: 450px;
+  height: 70px;
+  font-size: 30px;
+  font-weight : bold;
+  color: orange;
+}
+#nameRecord{
+  background-color: orange;
+  position: absolute; /* Reposition logo from the natural layout */
+  left: 25%;
+  top: 0%;
+  text-align: center;
+  padding: 15% 0%;
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  height: 200px;
+  z-index: 2;
+  display: none;
+}
+
+#restart {
+  background-color: orange;
+  position: absolute; /* Reposition logo from the natural layout */
+  left: 25%;
+  top: 0%;
+  text-align: center;
+  padding: 15% 0%;
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  height: 200px;
+  z-index: 2;
+}
+
 button:hover {
   opacity: 1; 
   color: red;
-}
-
-#myProgress {
-  align-self: center;
-  width: 100%;
-  background-color: beige;
-}
-
-#myBar {
-  width: 1%;
-  height: 30px;
-  background-color: coral;
 }

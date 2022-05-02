@@ -45,10 +45,20 @@
 
 <body onload="onLoad()">
     <text id="Loading">Loading...</text>
+    <!--<input type="text" value="Type your name" onclick="this.value='';" />-->
+
     <button id="EASY" onclick = "init('EASY')">EASY</button>
     <button id="HARD" onclick = "init('HARD')">HARD</button>
     <button id="CRAZY" onclick = "init('CRAZY')">CRAZY</button>
- <div id="scene-container">
+<div id="nameRecord">
+    <input type="text" value="Type your name" onclick="this.value='';" />
+    <button onclick="nameRecord()" style="width: 200px;">SUBMIT</button>
+</div>
+<div id="restart">
+    <button onclick = "location.href='intro.html'">HOME</button>
+    <button onclick = "restartGame()">RESTART</button>
+</div>
+<div id="scene-container">
     
 </div>
 

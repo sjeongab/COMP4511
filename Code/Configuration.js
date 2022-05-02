@@ -1,4 +1,4 @@
-const time = 60;
+const time = 10;
 const numItemUpper = 20;
 const numItemLower = 10;
 const catchRange = 1.8;
