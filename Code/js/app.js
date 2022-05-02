@@ -89,9 +89,11 @@ function update() {
 
 function restartGame() {
    for (var i = 0; i < itemList.length; i++) {
+      if (itemList[i].caught){
+         claw.base.remove(itemList[i].itemMesh);
+      }
       itemList[i].disposeItem();
    }
-
    addItems();
    updatePlanes();
    point = 0;
@@ -104,6 +106,8 @@ function restartGame() {
    ham_0.visible = true;
    ham_1.visible = false;
    ham_2.visible - false;
+   hamUpdate_1 = false;
+   hamUpdate_2 = false;
    // update claw 
    claw.base.position.set(0,2,0);
 }
