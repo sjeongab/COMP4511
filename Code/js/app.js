@@ -93,6 +93,8 @@ function nameRecord(){
    if(name=="TYPE YOUR NAME")
    name = "John Doe";
    writeScore(MODE, name, point);
+   document.getElementById('nameRecord').style.display = 'none';
+   document.getElementById('restart').style.display = 'inline-block';
 }
 
 function restartGame() {
