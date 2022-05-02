@@ -1,0 +1,53 @@
+<!-- index.html -->
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+ <title>HAMSTERKAUFEN</title>
+
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+
+ <meta charset="UTF-8" />
+
+ <link href="styles/leaderboard.css" rel="stylesheet" type="text/css">
+
+ <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-firestore.js"></script>
+ <script src="js/Leaderboard.js"></script>
+
+
+</head>
+<body>
+   <!-- Tab links -->
+<div class="tab">
+    <button class="tablinks" onclick="loadRank('EASY')">EASY</button>
+    <button class="tablinks" onclick="loadRank('HARD')">HARD</button>
+    <button class="tablinks" onclick="loadRank('CRAZY')">CRAZY</button>
+  </div>
+  
+  <!-- Tab content -->
+  <div id="TAB_EASY" class="tabcontent">
+    <p>
+        <table id="TABLE_EASY" style="width:100%">
+    </table></p> 
+  </div>
+  
+  <div id="TAB_HARD" class="tabcontent">
+    <p>
+        <table id="TABLE_HARD" style="width:100%">
+    </table></p> 
+  </div>
+  
+  <div id="TAB_CRAZY" class="tabcontent">
+    <p>
+        <table id="TABLE_CRAZY" style="width:100%">
+    </table></p> 
+  </div>
+</body>
+
+</html>

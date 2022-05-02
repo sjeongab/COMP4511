@@ -2,6 +2,7 @@ var timeLimit = time;
 var gamePlaying;
 
 function onLoad() {
+   //showRank();
    document.getElementById('Loading').style.display = 'block';
    document.getElementById('restart').style.display = 'none';
    document.getElementById('EASY').style.display = 'none';
@@ -61,8 +62,6 @@ function animate() {
             itemList[i].disposeItem();
          }
       }
-      //writeScore("John Doe", point);
-      //restartGame();
    }
 }
 
@@ -89,9 +88,11 @@ function update() {
    addPoint();
 }
 
-function nameRecord() {
-   document.getElementById('nameRecord').style.display = 'none';
-   document.getElementById('restart').style.display = 'inline-block';
+function nameRecord(){
+   var name = document.getElementById('name').value;
+   if(name=="TYPE YOUR NAME")
+   name = "John Doe";
+   writeScore(MODE, name, point);
 }
 
 function restartGame() {

@@ -1,0 +1,60 @@
+/* Style the tab */
+
+body {
+  background-color: orange;
+  margin: 5%;
+  overflow: hidden;
+  font-size: 15px;
+  color: orange;
+  font-weight : bold;
+ }
+ 
+ .tab {
+    overflow: hidden;
+    border: none;
+    background-color: beige;
+  }
+  
+  /* Style the buttons that are used to open the tab content */
+  .tab button {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: beige;
+    color: orange;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tab button:hover {
+    color: coral;
+  }
+  
+  /* Create an active/current tablink class */
+  .tab button.active {
+    background-color: orange;
+    color: beige;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    font-size: 30px;
+    font-weight: bold;
+    background-color: beige;
+    display: none;
+    padding: 6px 12px;
+    border-top: none;
+  }
+
+  table, tr, td{
+      background-color: coral;
+      border:3px solid beige;
+      color: beige;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      border-collapse: collapse;
+  }
