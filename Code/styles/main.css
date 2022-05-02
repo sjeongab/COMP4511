@@ -75,20 +75,6 @@ input {
   z-index: 2;
 }
 
-.submit {
-  background-color: beige;
-  border: none;
-  color: coral;
-  opacity: 0.6;
-  width: 200px;
-  height: 70px;
-  text-align: center;
-  display: inline-block;
-  font-size: 30px;
-  margin: 5% 20%;
-  font-weight : bold;
-}
-
 button:hover {
   opacity: 1; 
   color: red;
