@@ -44,6 +44,39 @@ function main_row(){
   return main_row;
 }
 
+function loadRank(mode){
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  document.getElementById("TAB_"+mode).style.display = "block";
+  //var tableBody = document.getElementById('RANK_HARD');
+  
+  var table = document.getElementById("TABLE_"+mode);
+  table.innerHTML = "";
+  var row = table.insertRow(0);
+  var col1 = row.insertCell(0);
+  var col2 = row.insertCell(1);
+  var col3 = row.insertCell(2);
+  col1.innerText = "RANK";
+  col2.innerText = "NAME";
+  col3.innerText = "SCORE";
+
+  var rank = database.ref(mode);
+  var i = 3;
+  rank.orderByChild("score").limitToLast(3).on("child_added", function(snapshot){
+    row = table.insertRow(1);
+    col1 = row.insertCell(0);
+    col2 = row.insertCell(1);
+    col3 = row.insertCell(2);
+    col1.innerText = i;
+    col2.innerText = snapshot.child("name").val();
+    col3.innerText = snapshot.child("score").val();
+    i-=1;
+  });
+
+}
+/*
 function rank_hard(){
   showRank();
  
@@ -51,7 +84,7 @@ function rank_hard(){
   for (i = 0; i < tabcontent.length; i++) {
     tabcontent[i].style.display = "none";
   }
-  document.getElementById("Paris").style.display = "block";
+  document.getElementById("TAB_HARD").style.display = "block";
  
   var tableBody = document.getElementById('RANK_HARD');
   tableBody.innerHTML = "";
@@ -100,4 +133,4 @@ function openCity(evt, cityName) {
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(cityName).style.display = "block";
   evt.currentTarget.className += " active";
-}
+}*/

@@ -25,42 +25,28 @@
 <body>
    <!-- Tab links -->
 <div class="tab">
-    <button class="tablinks" onclick="openCity(event, 'London')">EASY</button>
-    <button class="tablinks" onclick="rank_hard()">HARD</button>
-    <button class="tablinks" onclick="openCity(event, 'Tokyo')">CRAZY</button>
+    <button class="tablinks" onclick="loadRank('EASY')">EASY</button>
+    <button class="tablinks" onclick="loadRank('HARD')">HARD</button>
+    <button class="tablinks" onclick="loadRank('CRAZY')">CRAZY</button>
   </div>
   
   <!-- Tab content -->
-  <div id="London" class="tabcontent">
+  <div id="TAB_EASY" class="tabcontent">
     <p>
-        <table style="width:100%">
-          <tr>
-            <th>Rank</th>
-            <th>Name</th>
-            <th>Score</th>
-          </tr>
-          <tr>
-            <td>Alfreds Futterkiste</td>
-            <td>Maria Anders</td>
-            <td>Germany</td>
-          </tr>
-          <tr>
-            <td>Centro comercial Moctezuma</td>
-            <td>Francisco Chang</td>
-            <td>Mexico</td>
-          </tr>
-        </table></p>
-  </div>
-  
-  <div id="Paris" class="tabcontent">
-    <p>
-        <table id="RANK_HARD" style="width:100%">
+        <table id="TABLE_EASY" style="width:100%">
     </table></p> 
   </div>
   
-  <div id="Tokyo" class="tabcontent">
-    <h3>Tokyo</h3>
-    <p>Tokyo is the capital of Japan.</p>
+  <div id="TAB_HARD" class="tabcontent">
+    <p>
+        <table id="TABLE_HARD" style="width:100%">
+    </table></p> 
+  </div>
+  
+  <div id="TAB_CRAZY" class="tabcontent">
+    <p>
+        <table id="TABLE_CRAZY" style="width:100%">
+    </table></p> 
   </div>
 </body>
 
