@@ -43,19 +43,23 @@ function animate() {
       render();
    }
    else {
-      if(gamePlaying){
-      bgmSound.sound.stop();
-      endSound.play();
-      document.getElementById('scene-container').style.display = 'none';
-      document.getElementById('nameRecord').style.display = 'inline-block';
-      //document.getElementById('restart').style.display = 'inline-block';
-      gamePlaying = false;
-      for (var i = 0; i < itemList.length; i++) {
-         if (itemList[i].caught){
-            claw.base.remove(itemList[i].itemMesh);
+      if (gamePlaying) {
+         bgmSound.sound.stop();
+         endSound.play();
+         document.getElementById('scene-container').style.display = 'none';
+         document.getElementById('point').style.display = 'none';
+         document.getElementById('gold').style.display = 'none';
+         document.getElementById('time').style.display = 'none';
+         document.getElementById('finalScore').innerHTML = "Your Score: " + point.toString();
+         document.getElementById('nameRecord').style.display = 'inline-block';
+         //document.getElementById('restart').style.display = 'inline-block';
+         gamePlaying = false;
+         for (var i = 0; i < itemList.length; i++) {
+            if (itemList[i].caught) {
+               claw.base.remove(itemList[i].itemMesh);
+            }
+            itemList[i].disposeItem();
          }
-         itemList[i].disposeItem();
-      }
       }
       //writeScore("John Doe", point);
       //restartGame();
@@ -85,7 +89,7 @@ function update() {
    addPoint();
 }
 
-function nameRecord(){
+function nameRecord() {
    document.getElementById('nameRecord').style.display = 'none';
    document.getElementById('restart').style.display = 'inline-block';
 }
@@ -95,7 +99,12 @@ function restartGame() {
    document.getElementById('scene-container').style.display = 'flex';
    document.getElementById('restart').style.display = 'none';
    bgmSound.play();
-   
+   // display datas
+
+   document.getElementById('point').style.display = 'block';
+   document.getElementById('gold').style.display = 'block';
+   document.getElementById('time').style.display = 'block';
+
    addItems();
    updatePlanes();
    point = 0;
@@ -103,7 +112,7 @@ function restartGame() {
    updateGold();
    updatePoint();
    gameRunning = true;
-   timeLimit = time + Math.trunc(clock.getElapsedTime())+1;
+   timeLimit = time + Math.trunc(clock.getElapsedTime()) + 1;
    // update hamster
    ham_0.visible = true;
    ham_1.visible = false;
@@ -111,5 +120,5 @@ function restartGame() {
    hamUpdate_1 = false;
    hamUpdate_2 = false;
    // update claw 
-   claw.base.position.set(0,2,0);
+   claw.base.position.set(0, 2, 0);
 }
