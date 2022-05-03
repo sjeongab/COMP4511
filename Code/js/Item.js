@@ -64,17 +64,12 @@ class Item {
    }
 
    updateItem(planeX, planeZ) {
-
-      var orix = this.x;   // original x
-      var oriz = this.z;   // original z
       this.a = this.a + this.va;   //new angle
       this.a = this.a % (2 * Math.PI);  // modulo
       this.x = this.R * Math.cos(this.a);   //new x
       this.z = this.R * Math.sin(this.a);   //new z
-      var dx = this.x - orix;   //difference in x
-      var dz = this.z - oriz;   //difference in z
       this.itemMesh.position.set(planeX + this.x, this.y, planeZ + this.z);
-      this.itemMesh.rotation.set(this.x, this.x, this.x);
+      this.itemMesh.rotation.set(this.a,this.a,this.a);
    }
 
    createItem() {

@@ -62,7 +62,6 @@ function addPoint(event) {
             // create new item
             // get total number of empty slots
             var numEmpty = 0;
-            //console.log(emptyList);
             for (var j = 0;j<emptyList.length;j++){
                numEmpty += emptyList[j];
             }
