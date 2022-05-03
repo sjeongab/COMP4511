@@ -40,13 +40,13 @@ function addPoint(event) {
                point += Math.round(2 / itemList[i].r) + Math.round(itemList[i].va * 10);
                pointSound_2.play();
             }
-            if (point >= 20 && hamUpdate_1 == false) {
+            if (point >= 50 && hamUpdate_1 == false) {
                ham_0.visible = false;
                ham_1.visible = true;
                hamUpdate_1 = true;
                tadaSound.play();
             }
-            else if (point >= 40 && hamUpdate_2 == false) {
+            else if (point >= 100 && hamUpdate_2 == false) {
                ham_1.visible = false;
                ham_2.visible = true;
                hamUpdate_2 = true;
