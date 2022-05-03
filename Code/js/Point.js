@@ -40,30 +40,24 @@ function addPoint(event) {
                point += Math.round(2 / itemList[i].r) + Math.round(itemList[i].va * 10);
                pointSound_2.play();
             }
-            if (point >= 100 && hamUpdate_1 == false) {
+            if (point >= 20 && hamUpdate_1 == false) {
                ham_0.visible = false;
                ham_1.visible = true;
                hamUpdate_1 = true;
                tadaSound.play();
             }
-            else if (point >= 200 && hamUpdate_2 == false) {
+            else if (point >= 40 && hamUpdate_2 == false) {
                ham_1.visible = false;
                ham_2.visible = true;
                hamUpdate_2 = true;
                tadaSound.play();
             }
-            //document.getElementById("point").innerHTML = "Point: " + point;
+            
             claw.base.remove(itemList[i].itemMesh);
             itemList[i].disposeItem();
             itemList[i] = null;
             emptyList[i] = 1;
-            // var r = Math.random() / 10 + 0.15;
-            // if (i < numItemUpper) {
-            //    itemList[i] = new Item(r, angleListUpper[i], "upper_plane");
-            // } else {
-            //    itemList[i] = new Item(r, angleListLower[i - numItemUpper], "lower_plane");
-            // }
-            // itemList[i].createItem();
+            
             
             // create new item
             // get total number of empty slots
@@ -72,7 +66,7 @@ function addPoint(event) {
             for (var j = 0;j<emptyList.length;j++){
                numEmpty += emptyList[j];
             }
-            //console.log(numEmpty);
+         
             //add item
             var p = Math.random();
             if (numEmpty > maxEmpty){
@@ -81,7 +75,6 @@ function addPoint(event) {
             if (p>emptyProb){
                // determine which empty slot to add item
                var newItemSlotRel = Math.trunc(Math.random()*numEmpty)+1;
-               //console.log(newItemSlotRel);
                var newItemSlotAbs = -1;
                for (var k = 0;k<emptyList.length;k++){
                   newItemSlotRel -= emptyList[k];

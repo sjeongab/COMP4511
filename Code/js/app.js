@@ -119,7 +119,7 @@ function restartGame() {
    // update hamster
    ham_0.visible = true;
    ham_1.visible = false;
-   ham_2.visible - false;
+   ham_2.visible = false;
    hamUpdate_1 = false;
    hamUpdate_2 = false;
    // update claw 

@@ -3,7 +3,8 @@ body {
   background-color: orange;
   margin: 5%;
   overflow: hidden;
-  font-size: 100px;
+  font-family: Arial;
+  font-size: 80px;
   color: black;
   text-align: center;
   font-weight : bold;
