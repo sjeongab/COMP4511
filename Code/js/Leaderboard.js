@@ -63,8 +63,9 @@ function loadRank(mode){
   col3.innerText = "SCORE";
 
   var rank = database.ref(mode);
-  var i = 3;
-  rank.orderByChild("score").limitToLast(3).on("child_added", function(snapshot){
+  const num_rank = 10;
+  var i = num_rank;
+  rank.orderByChild("score").limitToLast(num_rank).on("child_added", function(snapshot){
     row = table.insertRow(1);
     col1 = row.insertCell(0);
     col2 = row.insertCell(1);

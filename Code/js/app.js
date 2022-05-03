@@ -2,7 +2,6 @@ var timeLimit = time;
 var gamePlaying;
 
 function onLoad() {
-   //showRank();
    document.getElementById('Loading').style.display = 'block';
    document.getElementById('restart').style.display = 'none';
    document.getElementById('EASY').style.display = 'none';
@@ -53,7 +52,6 @@ function animate() {
          document.getElementById('time').style.display = 'none';
          document.getElementById('finalScore').innerHTML = "Your Score: " + point.toString();
          document.getElementById('nameRecord').style.display = 'inline-block';
-         //document.getElementById('restart').style.display = 'inline-block';
          gamePlaying = false;
          for (var i = 0; i < itemList.length; i++) {
             if (itemList[i].caught) {
@@ -90,7 +88,7 @@ function update() {
 
 function nameRecord(){
    var name = document.getElementById('name').value;
-   if(name=="TYPE YOUR NAME")
+   if(name=="Type your name")
    name = "John Doe";
    writeScore(MODE, name, point);
    document.getElementById('nameRecord').style.display = 'none';
