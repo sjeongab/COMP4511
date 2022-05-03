@@ -58,6 +58,7 @@ body {
   
   /* Style the tab content */
   .tabcontent {
+    font-family: Arial;
     font-size: 30px;
     font-weight: bold;
     background-color: beige;
@@ -67,6 +68,7 @@ body {
   }
 
   table, tr, td{
+      font-family: Arial;
       background-color: coral;
       border:3px solid beige;
       color: beige;

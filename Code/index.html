@@ -3,11 +3,36 @@
 <head>
     <title>HAMSTERKAUFEN</title>
     <link href="styles/intro.css" rel="stylesheet" type="text/css">
+    <script src="js/HowToPlay.js"></script>
 </head>
 
 <body>
+    
+    <div id="howtoplay">
+    <p>
+        <h1>RULES</h1>
+        1. Use arrow keys to move your claw. Check the target point on planes.<br>
+        2. Hold space bar to get your claw to the planes.<br>
+        3. Catch the items.<br>
+        4. Have fun!<br>
+    </p>
+    <p>
+        <h1>ITEMS</h1>
+        <img src="HowToPlay/low.png">
+        <img src="HowToPlay/mid.png">
+        <img src="HowToPlay/high.png">: Gain points. Items on the lower plane worth more points.<br>
+        <img src="HowToPlay/plus.png">: Gain 3 seconds of extra time.<br>
+        <img src="HowToPlay/gold.png">: Collect 7 of them to get huge bonus scores!<br>
+    </p>
+    <p>
+        <h1>TIPS</h1>
+        * Claw doesn't move down if the target is out of plane <br>
+        * Collecting 7 golds is harder than expected! <br>
+    </p>
+    <button onclick="location.href='index.html'">BACK</button>
+    </div>
     <button onclick="location.href='main.html'">START GAME</button>
-    <button>HOW TO PLAY</button>
+    <button onclick="instruction()">HOW TO PLAY</button>
     <button onclick="location.href='leaderboard.html'">LEADERBOARD</button>
 </body>
 </html>
