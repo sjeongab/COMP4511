@@ -27,7 +27,7 @@ function addPoint(event) {
                goldCount += 1;
                timeUpSound.play();
                if (goldCount >= goldMax) {
-                  point += 300;
+                  point += goldScore;
                   goldCount = 0;
                }
                updateGold();
@@ -55,13 +55,44 @@ function addPoint(event) {
             //document.getElementById("point").innerHTML = "Point: " + point;
             claw.base.remove(itemList[i].itemMesh);
             itemList[i].disposeItem();
-            var r = Math.random() / 10 + 0.15;
-            if (i < numItemUpper) {
-               itemList[i] = new Item(r, angleListUpper[i], "upper_plane");
-            } else {
-               itemList[i] = new Item(r, angleListLower[i - numItemUpper], "lower_plane");
+            itemList[i] = null;
+            emptyList[i] = 1;
+            // var r = Math.random() / 10 + 0.15;
+            // if (i < numItemUpper) {
+            //    itemList[i] = new Item(r, angleListUpper[i], "upper_plane");
+            // } else {
+            //    itemList[i] = new Item(r, angleListLower[i - numItemUpper], "lower_plane");
+            // }
+            // itemList[i].createItem();
+            
+            // create new item
+            // get total number of empty slots
+            var numEmpty = 0;
+            console.log(emptyList);
+            for (var j = 0;j<emptyList.length;j++){
+               numEmpty += emptyList[j];
             }
-            itemList[i].createItem();
+            console.log(numEmpty);
+            //add item
+            var p = Math.random();
+            if (numEmpty > maxEmpty){
+               p = 1;
+            }
+            if (p>emptyProb){
+               // determine which empty slot to add item
+               var newItemSlotRel = Math.trunc(Math.random()*numEmpty)+1;
+               console.log(newItemSlotRel);
+               var newItemSlotAbs = -1;
+               for (var k = 0;k<emptyList.length;k++){
+                  newItemSlotRel -= emptyList[k];
+                  if (newItemSlotRel == 0){
+                     newItemSlotAbs = k;
+                     break;
+                  }
+               }
+               // add item
+               addItem(newItemSlotAbs);
+            }
          }
       }
    }

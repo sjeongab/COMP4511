@@ -29,7 +29,7 @@ function init(mode) {
    createCanvas();
    bgmSound.play();
    addObjects();
-   addItems();
+   addInitialItems();
 
    displayPoint();
    displayTime();
@@ -106,7 +106,7 @@ function restartGame() {
    document.getElementById('gold').style.display = 'block';
    document.getElementById('time').style.display = 'block';
 
-   addItems();
+   addInitialItems();
    updatePlanes();
    point = 0;
    goldCount = 0;

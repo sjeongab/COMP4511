@@ -6,4 +6,6 @@ const vaUpper = 0.01;
 const vaLower = -0.01;
 const addTime = 0;
 const goldMax = 7;
+const goldScore = 300;
 const emptyProb = 0.5;
+const maxEmpty = Math.trunc((numItemUpper+numItemLower)/2);
