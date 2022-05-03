@@ -4,5 +4,6 @@ const numItemLower = 10;
 const catchRange = 1.8;
 const vaUpper = 0.01;
 const vaLower = -0.01;
-const addTime = 3;
+const addTime = 0;
 const goldMax = 7;
+const emptyProb = 0.5;

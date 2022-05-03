@@ -1,5 +1,7 @@
 var angleListUpper = new Array(numItemUpper);
 var angleListLower = new Array(numItemLower);
+var emptyListUpper = new Array(numItemUpper);
+var emptyListLower = new Array(numItemLower);
 var itemList = new Array(numItemLower + numItemUpper);
 var goldCount = 0;
 var goldMaxString = goldMax.toString();
@@ -102,41 +104,59 @@ class Item {
 function addItems(num_items) {
    for (var i = 0; i < numItemUpper; i++) {
       angleListUpper[i] = 2 * Math.PI / numItemUpper * i;
+      emptyListUpper[i] = 1;
    }
    for (var i = 0; i < numItemLower; i++) {
       angleListLower[i] = 2 * Math.PI / numItemLower * i;
+      emptyListLower[i] = 1;
    }
    for (var i = 0; i < numItemUpper; i++) {
-      var r = Math.random() / 10 + 0.15;
-      itemList[i] = new Item(r, angleListUpper[i], "upper_plane");
+      var p = Math.random();
+      if (p > emptyProb) {
+         var r = Math.random() / 10 + 0.15;
+         itemList[i] = new Item(r, angleListUpper[i], "upper_plane");
+      } else {
+         itemList[i] = null;
+      }
 
    }
    for (var i = 0; i < numItemLower; i++) {
-      var r = Math.random() / 10 + 0.15;
-      itemList[i + numItemUpper] = new Item(r, angleListLower[i], "lower_plane");
+      var p = Math.random()
+      if (p > emptyProb) {
+         var r = Math.random() / 10 + 0.15;
+         itemList[i + numItemUpper] = new Item(r, angleListLower[i], "lower_plane");
+      } else {
+         itemList[i + numItemUpper] = null;
+      }
    }
    for (var i = 0; i < itemList.length; i++) {
-      itemList[i].createItem();
+      if (itemList[i] !== null) {
+         itemList[i].createItem();
+      }
    }
 }
 
 function updateItems() {
    var currDistance;
    for (var i = 0; i < itemList.length; i++) {
-      currDistance = ((claw.mesh.position.x - itemList[i].x) ** 2 + (claw.base.position.y - itemList[i].y) ** 2 + (claw.mesh.position.z - itemList[i].z) ** 2) ** (1 / 2);
-      if (currDistance <= itemList[i].r * catchRange) {
-         itemList[i].isCaught(claw.base);
-         claw.down = false;
-         claw.up = true;
-         break;
+      if (itemList[i] !== null) {
+         currDistance = ((claw.mesh.position.x - itemList[i].x) ** 2 + (claw.base.position.y - itemList[i].y) ** 2 + (claw.mesh.position.z - itemList[i].z) ** 2) ** (1 / 2);
+         if (currDistance <= itemList[i].r * catchRange) {
+            itemList[i].isCaught(claw.base);
+            claw.down = false;
+            claw.up = true;
+            break;
+         }
       }
    }
    for (var i = 0; i < itemList.length; i++) {
-      if (itemList[i].caught == false) {
-         if (itemList[i].plane == "upper_plane") {
-            itemList[i].updateItem(upperX, upperZ);
-         } else {
-            itemList[i].updateItem(lowerX, lowerZ);
+      if (itemList[i] !== null) {
+         if (itemList[i].caught == false) {
+            if (itemList[i].plane == "upper_plane") {
+               itemList[i].updateItem(upperX, upperZ);
+            } else {
+               itemList[i].updateItem(lowerX, lowerZ);
+            }
          }
       }
    }
