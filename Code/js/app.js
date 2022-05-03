@@ -54,10 +54,12 @@ function animate() {
          document.getElementById('nameRecord').style.display = 'inline-block';
          gamePlaying = false;
          for (var i = 0; i < itemList.length; i++) {
-            if (itemList[i].caught) {
-               claw.base.remove(itemList[i].itemMesh);
+            if (itemList[i] !== null) {
+               if (itemList[i].caught) {
+                  claw.base.remove(itemList[i].itemMesh);
+               }
+               itemList[i].disposeItem();
             }
-            itemList[i].disposeItem();
          }
       }
    }
@@ -86,10 +88,10 @@ function update() {
    addPoint();
 }
 
-function nameRecord(){
+function nameRecord() {
    var name = document.getElementById('name').value;
-   if(name=="Type your name")
-   name = "John Doe";
+   if (name == "Type your name")
+      name = "John Doe";
    writeScore(MODE, name, point);
    document.getElementById('nameRecord').style.display = 'none';
    document.getElementById('restart').style.display = 'inline-block';

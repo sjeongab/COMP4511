@@ -93,6 +93,16 @@ function addPoint(event) {
                // add item
                addItem(newItemSlotAbs);
             }
+            if (numEmpty > maxEmpty){
+               for (var k = 0;k<emptyList.length;k++){
+                  if (emptyList[k] == 1){
+                     var pr = Math.random();
+                     if (pr > emptyProb){
+                        addItem(k);
+                     }
+                  }
+               }
+            }
          }
       }
    }
