@@ -121,7 +121,8 @@ function addInitialItems(num_items) {
    for (var i =0;i<emptyList.length;i++){
       emptyList[i] = 1;
    }
-   for (var i = 0; i< itemList.length;i++){
+   addItem(0); // guarantee at least one item is on the plane
+   for (var i = 1; i< itemList.length;i++){
       var p = Math.random();
       if (p>emptyProb){
          addItem(i);
