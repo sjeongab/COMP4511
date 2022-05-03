@@ -1,4 +1,4 @@
-#How to install
+# How to install
 1. Install VScode with live server extension.
 2. Press Ctrl/Cmd+Shift+P, type change live server workspace, choose code
 3. Click "Go Live" at the right bottom of the VScode.
