@@ -1,8 +1,7 @@
 var angleListUpper = new Array(numItemUpper);
 var angleListLower = new Array(numItemLower);
-var emptyListUpper = new Array(numItemUpper);
-var emptyListLower = new Array(numItemLower);
 var itemList = new Array(numItemLower + numItemUpper);
+var emptyList = new Array(numItemLower+numItemUpper);
 var goldCount = 0;
 var goldMaxString = goldMax.toString();
 var goldText;
@@ -11,6 +10,7 @@ class Item {
    constructor(r, a, plane) {
       this.r = r;     // radius of the item
       this.a = a;     // angle
+      this.plane = plane;
       if (plane == 'upper_plane') {
          this.R = 5;
          this.x = upperX + this.R * Math.cos(a);
@@ -75,8 +75,6 @@ class Item {
       var dz = this.z - oriz;   //difference in z
       this.itemMesh.position.set(planeX + this.x, this.y, planeZ + this.z);
       this.itemMesh.rotation.set(this.x, this.x, this.x);
-      this.x += 0.01;
-
    }
 
    createItem() {
@@ -101,37 +99,34 @@ class Item {
    }
 }
 
-function addItems(num_items) {
+function addItem(i){
+   var r = Math.random()/10 + 0.15;
+   emptyList[i] = 0;
+   if (i<numItemUpper){
+      itemList[i] = new Item(r,angleListUpper[i],"upper_plane");
+   } else {
+      itemList[i] = new Item(r,angleListLower[i-numItemUpper],"lower_plane");
+   }
+   itemList[i].createItem();
+}
+
+function addInitialItems(num_items) {
    for (var i = 0; i < numItemUpper; i++) {
       angleListUpper[i] = 2 * Math.PI / numItemUpper * i;
-      emptyListUpper[i] = 1;
    }
    for (var i = 0; i < numItemLower; i++) {
       angleListLower[i] = 2 * Math.PI / numItemLower * i;
-      emptyListLower[i] = 1;
    }
-   for (var i = 0; i < numItemUpper; i++) {
+   for (var i =0;i<emptyList.length;i++){
+      emptyList[i] = 1;
+   }
+   addItem(0); // guarantee at least one item is on the plane
+   for (var i = 1; i< itemList.length;i++){
       var p = Math.random();
-      if (p > emptyProb) {
-         var r = Math.random() / 10 + 0.15;
-         itemList[i] = new Item(r, angleListUpper[i], "upper_plane");
+      if (p>emptyProb){
+         addItem(i);
       } else {
          itemList[i] = null;
-      }
-
-   }
-   for (var i = 0; i < numItemLower; i++) {
-      var p = Math.random()
-      if (p > emptyProb) {
-         var r = Math.random() / 10 + 0.15;
-         itemList[i + numItemUpper] = new Item(r, angleListLower[i], "lower_plane");
-      } else {
-         itemList[i + numItemUpper] = null;
-      }
-   }
-   for (var i = 0; i < itemList.length; i++) {
-      if (itemList[i] !== null) {
-         itemList[i].createItem();
       }
    }
 }
@@ -145,6 +140,7 @@ function updateItems() {
             itemList[i].isCaught(claw.base);
             claw.down = false;
             claw.up = true;
+            emptyList[i] = 1;
             break;
          }
       }

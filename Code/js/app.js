@@ -29,7 +29,7 @@ function init(mode) {
    createCanvas();
    bgmSound.play();
    addObjects();
-   addItems();
+   addInitialItems();
 
    displayPoint();
    displayTime();
@@ -54,10 +54,12 @@ function animate() {
          document.getElementById('nameRecord').style.display = 'inline-block';
          gamePlaying = false;
          for (var i = 0; i < itemList.length; i++) {
-            if (itemList[i].caught) {
-               claw.base.remove(itemList[i].itemMesh);
+            if (itemList[i] !== null) {
+               if (itemList[i].caught) {
+                  claw.base.remove(itemList[i].itemMesh);
+               }
+               itemList[i].disposeItem();
             }
-            itemList[i].disposeItem();
          }
       }
    }
@@ -86,10 +88,10 @@ function update() {
    addPoint();
 }
 
-function nameRecord(){
+function nameRecord() {
    var name = document.getElementById('name').value;
-   if(name=="Type your name")
-   name = "John Doe";
+   if (name == "Type your name")
+      name = "John Doe";
    writeScore(MODE, name, point);
    document.getElementById('nameRecord').style.display = 'none';
    document.getElementById('restart').style.display = 'inline-block';
@@ -106,7 +108,7 @@ function restartGame() {
    document.getElementById('gold').style.display = 'block';
    document.getElementById('time').style.display = 'block';
 
-   addItems();
+   addInitialItems();
    updatePlanes();
    point = 0;
    goldCount = 0;
@@ -117,7 +119,7 @@ function restartGame() {
    // update hamster
    ham_0.visible = true;
    ham_1.visible = false;
-   ham_2.visible - false;
+   ham_2.visible = false;
    hamUpdate_1 = false;
    hamUpdate_2 = false;
    // update claw 
