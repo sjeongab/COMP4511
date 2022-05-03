@@ -68,11 +68,11 @@ function addPoint(event) {
             // create new item
             // get total number of empty slots
             var numEmpty = 0;
-            console.log(emptyList);
+            //console.log(emptyList);
             for (var j = 0;j<emptyList.length;j++){
                numEmpty += emptyList[j];
             }
-            console.log(numEmpty);
+            //console.log(numEmpty);
             //add item
             var p = Math.random();
             if (numEmpty > maxEmpty){
@@ -81,7 +81,7 @@ function addPoint(event) {
             if (p>emptyProb){
                // determine which empty slot to add item
                var newItemSlotRel = Math.trunc(Math.random()*numEmpty)+1;
-               console.log(newItemSlotRel);
+               //console.log(newItemSlotRel);
                var newItemSlotAbs = -1;
                for (var k = 0;k<emptyList.length;k++){
                   newItemSlotRel -= emptyList[k];
@@ -94,11 +94,16 @@ function addPoint(event) {
                addItem(newItemSlotAbs);
             }
             if (numEmpty > maxEmpty){
+               var countNew = 1;
                for (var k = 0;k<emptyList.length;k++){
                   if (emptyList[k] == 1){
                      var pr = Math.random();
-                     if (pr > emptyProb){
+                     if (pr < maxEmptyProb){
                         addItem(k);
+                        countNew++;
+                     }
+                     if (countNew >= maxNumNewItem){
+                        break;
                      }
                   }
                }

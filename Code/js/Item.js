@@ -108,7 +108,7 @@ function addItem(i){
       itemList[i] = new Item(r,angleListLower[i-numItemUpper],"lower_plane");
    }
    itemList[i].createItem();
-   console.log(i);
+   //console.log(i);
 }
 
 function addInitialItems(num_items) {
